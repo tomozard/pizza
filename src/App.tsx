@@ -10,7 +10,7 @@ import Cart from "./components/cart"
 function App() {
   return (
     <Provider store={store}>
-      <Container>
+      <Container style={{padding: '12px 24px'}}>
         <Grid container spacing={2}>
           <Grid item xs={9} style={{borderRight: '1px dashed #ccc'}}>
             <Product></Product>
