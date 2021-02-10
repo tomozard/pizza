@@ -5,56 +5,43 @@ interface ICartState {
   carts?: ICart[];
 }
 
-const initialCartState = {
-  carts: [],
-};
+const initialCartState: ICart[] = [];
 
-const cartReducer = (state: ICartState = initialCartState, action: any) => {
+const cartReducer = (state: ICart[] = initialCartState, action: any) => {
   switch (action.type) {
     case "ADD_CART":
-      const hasInCart = _.find(state.carts, function (c) {
+      const hasInCart = _.find(state, function (c) {
         return c.product._id === action.payload.product._id;
       });
       if (hasInCart) {
         hasInCart.amount++;
-        const addState = {
-          ...state,
-          carts: state.carts?.map(
-            (item) => (item.product._id !== action.payload.product._id) ?  {...hasInCart}  : {...item}
-          ),
-        };
+        const filterState = state.filter((item) => item.product._id !== action.payload.product._id);
+        const addState = [...(filterState || []), hasInCart];
         return addState;
       } else {
-        const addState = {
-          ...state,
-          carts: [...(state.carts || []), action.payload],
-        };
+        const addState = [...(state || []), action.payload];
         return addState;
       }
     case "REMOVE_CART":
-      const removeState = {
-        ...state,
-        carts: state.carts?.filter(
-          (item) => item.product._id !== action.payload.product._id
-        ),
-      };
+      const removeState = state.filter(
+        (item) => item.product._id !== action.payload.product._id
+      );
       return removeState;
     case "UPDATE_CART":
-      const updateState = {
-        ...state,
-        carts: state.carts
-          ?.filter((item) => item.product._id !== action.payload.product._id)
-          .push(action.payload),
-      };
-      return updateState;
+      const hasUpdate = _.find(state, function (c) {
+        return c.product._id === action.payload.product._id;
+      });
+      if (hasUpdate) {
+        const filterState = state.filter((item) => item.product._id !== action.payload.product._id);
+        const updateState = [...(filterState || []), hasUpdate];
+        return updateState;
+      }else{
+        return state;
+      }
     case "CLEAR_CART":
-      const clearState = {
-        ...state,
-        carts: [],
-      };
-      return clearState;
+      return [];
     case "GET_CART":
-      return state.carts;
+      return state;
     default:
       return state;
   }

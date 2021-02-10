@@ -3,7 +3,7 @@ import { ICart, IProduct } from "../../interfaces";
 export const addCarts = (product: IProduct) => {
   return {
     type: "ADD_CART",
-    payload: { product, amount: 1 } as ICart,
+    payload: { product, amount: 1 , id: new Date().getTime() } as ICart,
   };
 };
 
@@ -14,23 +14,24 @@ export const removeCarts = (product: IProduct) => {
   };
 };
 
-export const updateCarts = (product: IProduct, amount: number) => {
+export const updateCarts = (product: IProduct) => {
   return {
     type: "UPDATE_CART",
-    payload: { product, amount } as ICart,
+    payload: { product } as ICart,
   };
 };
 
 export const clearCarts = () => {
-  return {
-    type: "UPDATE_CART",
-    payload: {},
+    return {
+      type: "UPDATE_CART",
+      payload: {}
+    };
   };
-};
+
 
 export const getCarts = () => {
-  return {
-    type: "GET_CART",
-    payload: {},
+    return {
+      type: "GET_CART",
+      payload: {}
+    };
   };
-};
