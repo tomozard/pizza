@@ -1,6 +1,12 @@
 import { Store, createStore, applyMiddleware } from "redux";
 import reduxThunk from "redux-thunk";
+import { ICart, IProduct } from "../interfaces";
 import reducers from "./reducers";
+
+export type AppState = {
+  carts: ICart[];
+  product: IProduct[];
+};
 
 const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 

@@ -5,13 +5,13 @@ import { AxiosError } from 'axios'
 
 interface IProductState {
 	fetching: boolean
-	products?: IProduct[] | null
+	products?: IProduct[]
 	error?: AxiosError| null
 }
 
 const initialProductState = {
 	fetching: false,
-	products: null
+	products: []
 }
 
 const productReducer: Reducer<IProductState, productActions> = (

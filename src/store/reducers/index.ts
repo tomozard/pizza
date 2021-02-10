@@ -1,8 +1,10 @@
 import { combineReducers } from 'redux'
 import productReducer from './productReducer'
+import cartReducer from './cartReducer'
 
 const rootReducer = combineReducers({
-	products: productReducer
+	products: productReducer,
+	carts: cartReducer
 })
 
 // Note that we do not have to explicitly declare a new interface for AppState.

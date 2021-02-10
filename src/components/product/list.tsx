@@ -12,6 +12,8 @@ import Typography from "@material-ui/core/Typography";
 import { IProduct } from "../../interfaces";
 import { Grid } from "@material-ui/core";
 import LinesEllipsis from "react-lines-ellipsis";
+import { Provider, useSelector, useDispatch } from "react-redux";
+import { addCarts } from "../../store/actions/cartActions";
 
 interface Props {
   product: IProduct;
@@ -31,7 +33,12 @@ const useStyles = makeStyles({
 
 const List = (props: Props) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const product = props.product;
+
+  const addToCart = () => {
+    dispatch(addCarts(product));
+  };
 
   return (
     <Card className={classes.root}>
@@ -46,9 +53,7 @@ const List = (props: Props) => {
           </Grid>
           <Grid item xs={12} md={8}>
             <CardContent>
-              <Typography component="h3">
-                {product.product_name_th}
-              </Typography>
+              <Typography component="h3">{product.product_name_th}</Typography>
               <LinesEllipsis
                 text={product.product_detail_th}
                 maxLine="3"
@@ -56,15 +61,20 @@ const List = (props: Props) => {
                 trimRight
                 basedOn="letters"
               ></LinesEllipsis>
-              <Typography variant="subtitle2">
-                ฿ {product.price}
-              </Typography>
+              <Typography variant="subtitle2">฿ {product.price}</Typography>
             </CardContent>
           </Grid>
         </Grid>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary" className={classes.floatRight}>
+        <Button
+          size="small"
+          color="primary"
+          className={classes.floatRight}
+          onClick={() => {
+            addToCart();
+          }}
+        >
           Add Card
         </Button>
       </CardActions>

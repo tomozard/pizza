@@ -27,7 +27,7 @@ interface ProductSize {
 }
 
 export default interface IProduct {
-  id: string;
+  _id: string;
   type: string;
   category: string;
   product_id: string;
