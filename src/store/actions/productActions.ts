@@ -40,19 +40,19 @@ export const getProductActionCreator: ActionCreator<
 	try {
 		// Try to fetch a random person, and set in state
 		const products: IProduct[] = await productApi.getProduct()
-		const fetchRandomUserSuccessAction: IFetchProductSucessAction = {
+		const fetchProductSuccessAction: IFetchProductSucessAction = {
 			type: 'FETCH_PRODUCT_SUCCESS',
 			products: products
 		}
-		return dispatch(fetchRandomUserSuccessAction)
+		return dispatch(fetchProductSuccessAction)
 	} catch (error) {
 		// Catch error fetching random person and set in redux
 		console.log('error in action creator')
 		const axiosError = error as AxiosError
-		const fetchRandomUserErrorAction: IFetchProductErrorAction = {
+		const fetchProductErrorAction: IFetchProductErrorAction = {
 			type: 'FETCH_PRODUCT_ERROR',
 			error: axiosError
 		}
-		return dispatch(fetchRandomUserErrorAction)
+		return dispatch(fetchProductErrorAction)
 	}
 }

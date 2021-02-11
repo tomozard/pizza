@@ -7,6 +7,7 @@ import { Grid, Container } from "@material-ui/core";
 // Component
 import Product from "./components/product";
 import Cart from "./components/cart"
+import Location from "./components/location"
 function App() {
   return (
     <Provider store={store}>
@@ -17,6 +18,9 @@ function App() {
           </Grid>
           <Grid item xs={3}>
             <Cart></Cart>
+          </Grid>
+          <Grid item xs={12}>
+            <Location></Location>
           </Grid>
         </Grid>
       </Container>
