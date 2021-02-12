@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 //Interfaces
 import { ILocation, ICoor } from "../../interfaces";
 //Package
-import { GoogleMap, useJsApiLoader, Polygon } from "@react-google-maps/api";
+import { GoogleMap, Polygon, useJsApiLoader } from "@react-google-maps/api";
 interface Props {
   location: ILocation;
 }
@@ -18,8 +18,6 @@ const containerStyle = {
   height: "500px",
 };
 
-const center = { lng:99.6150, lat:  7.5549 }
-
 const options = {
   fillColor: "lightblue",
   fillOpacity: 0.5,
@@ -33,37 +31,28 @@ const options = {
   zIndex: 1,
 };
 
-const Map = (props: Props) => {
+const Map3 = (props: Props) => {
   const location = props.location;
-  const { isLoaded } = useJsApiLoader({
-    id: "google-map-script",
-    googleMapsApiKey: "AIzaSyDkC_udSZKGGVZg_6vU2Uqc7EJBCOOjm8U",
+  const { isLoaded, loadError } = useJsApiLoader({
+    googleMapsApiKey: "AIzaSyDkC_udSZKGGVZg_6vU2Uqc7EJBCOOjm8U", // ,
+    // ...otherOptions
   });
 
-  const [map, setMap] = React.useState(null);
+  const [center, setCenter] = useState<ICoor>({
+    lat: 7.5549,
+    lng: 99.615,
+  });
 
-  const onLoad = React.useCallback(function callback(map) {
-    const bounds = new window.google.maps.LatLngBounds();
-    map.fitBounds(bounds);
-    setMap(map);
-  }, []);
+  const [zoom, setZoom] = useState<number>(13);
 
   const onPolygonLoad = (polygon: any) => {
     // console.log("polygon: ", polygon);
   };
 
-  const onUnmount = React.useCallback(function callback(map) {
-    setMap(null);
-  }, []);
-
   return isLoaded ? (
-    <GoogleMap
-      mapContainerStyle={containerStyle}
-      center={center}
-      zoom={12.5}
-      onLoad={onLoad}
-      onUnmount={onUnmount}
-    >
+    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom}>
+      {/* Child components, such as markers, info windows, etc. */}
+      <></>
       {location.features.map((l, i) => {
         const coors: ICoor[] = l.geometry.coordinates[0].map(
           (coor: [string, string]) => {
@@ -86,4 +75,4 @@ const Map = (props: Props) => {
   );
 };
 
-export default Map;
+export default Map3;

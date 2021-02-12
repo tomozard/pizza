@@ -7,7 +7,7 @@ import { Grid, Container } from "@material-ui/core";
 // Component
 import Product from "./components/product";
 import Cart from "./components/cart";
-import Location from "./components/location";
+import Location from "./components/location/index";
 function App() {
   return (
     <Provider store={store}>
