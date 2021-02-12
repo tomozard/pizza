@@ -6,14 +6,14 @@ import store from "./store/store";
 import { Grid, Container } from "@material-ui/core";
 // Component
 import Product from "./components/product";
-import Cart from "./components/cart"
-import Location from "./components/location"
+import Cart from "./components/cart";
+import Location from "./components/location";
 function App() {
   return (
     <Provider store={store}>
-      <Container style={{padding: '12px 24px'}}>
+      <Container style={{ padding: "12px 24px" }}>
         <Grid container spacing={2}>
-          <Grid item xs={9} style={{borderRight: '1px dashed #ccc'}}>
+          <Grid item xs={9} style={{ borderRight: "1px dashed #ccc" }}>
             <Product></Product>
           </Grid>
           <Grid item xs={3}>

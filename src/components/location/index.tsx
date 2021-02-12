@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import useApi from "../../hooks/useApi";
+import useApi, {UseLocaltionApi} from "../../hooks/useApi";
 import locationApi from "../../services/api/locationApi";
 // Material UI
 import { Grid, Typography } from "@material-ui/core";
 //Component
-
+import Map from "./map";
 
 interface Props {}
 
 const Index = (props: Props) => {
-  const [location, loading, error, fetchData] = useApi(
+  const [location, loading, error, fetchData] = UseLocaltionApi(
     locationApi.getLocation,
     []
   );
@@ -28,7 +28,9 @@ const Index = (props: Props) => {
       ) : error ? (
         <div>Fetch Error</div>
       ) : (
-<></>
+        <>
+          <Map location={location}></Map>
+        </>
       )}
     </div>
   );
