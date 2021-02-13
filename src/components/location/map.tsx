@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 //Interfaces
 import { ILocation, ICoor } from "../../interfaces";
 //Package
-import { GoogleMap, Polygon, useJsApiLoader } from "@react-google-maps/api";
+import {
+  GoogleMap,
+  Polygon,
+  useJsApiLoader,
+  Autocomplete,
+  LoadScript,
+  StandaloneSearchBox,
+  Marker,
+} from "@react-google-maps/api";
+import { TextField } from "@material-ui/core";
+import GooglePlacesAutocomplete, {
+  geocodeByAddress,
+  geocodeByPlaceId,
+  getLatLng,
+} from "react-google-places-autocomplete";
 interface Props {
   location: ILocation;
 }
@@ -31,10 +45,11 @@ const options = {
   zIndex: 1,
 };
 
-const Map3 = (props: Props) => {
+const Map = (props: Props) => {
   const location = props.location;
   const { isLoaded, loadError } = useJsApiLoader({
     googleMapsApiKey: "AIzaSyDkC_udSZKGGVZg_6vU2Uqc7EJBCOOjm8U", // ,
+    libraries: ["places"],
     // ...otherOptions
   });
 
@@ -48,31 +63,63 @@ const Map3 = (props: Props) => {
   const onPolygonLoad = (polygon: any) => {
     // console.log("polygon: ", polygon);
   };
+  const [value, setValue] = useState<any>(null);
+
+  const [marker, setMarker] = useState<google.maps.LatLng | null>(null);
+
+  useEffect(() => {
+    if (value && value !== null) {
+      console.log(value);
+      // const placeId: string = value.value.place_id || "";
+      // geocodeByPlaceId(placeId)
+      //   .then((results) => console.log(results))
+      //   .catch((error) => console.error(error));
+      if (value.label !== "") {
+        geocodeByAddress(value.label)
+          .then((results) => getLatLng(results[0]))
+          .then(({ lat, lng }) => {
+            console.log("Successfully got latitude and longitude", {
+              lat,
+              lng,
+            });
+            setMarker(new google.maps.LatLng({ lat: lat, lng: lng }));
+          });
+      }
+    }
+  }, [value]);
 
   return isLoaded ? (
-    <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom}>
-      {/* Child components, such as markers, info windows, etc. */}
-      <></>
-      {location.features.map((l, i) => {
-        const coors: ICoor[] = l.geometry.coordinates[0].map(
-          (coor: [string, string]) => {
-            return { lng: parseFloat(coor[0]), lat: parseFloat(coor[1]) };
-          }
-        );
-        // console.log(i, coors);
-        return (
-          <Polygon
-            key={i}
-            onLoad={onPolygonLoad}
-            paths={coors}
-            options={options}
-          />
-        );
-      })}
-    </GoogleMap>
+    <>
+      <GooglePlacesAutocomplete
+        selectProps={{
+          value,
+          onChange: setValue,
+        }}
+      ></GooglePlacesAutocomplete>
+      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={zoom}>
+        {/* Child components, such as markers, info windows, etc. */}
+        {location.features.map((l, i) => {
+          const coors: ICoor[] = l.geometry.coordinates[0].map(
+            (coor: [string, string]) => {
+              return { lng: parseFloat(coor[0]), lat: parseFloat(coor[1]) };
+            }
+          );
+          // console.log(i, coors);
+          return (
+            <Polygon
+              key={i}
+              onLoad={onPolygonLoad}
+              paths={coors}
+              options={options}
+            />
+          );
+        })}
+        {marker !== null && <Marker position={marker}></Marker>}
+      </GoogleMap>
+    </>
   ) : (
     <></>
   );
 };
 
-export default Map3;
+export default Map;
