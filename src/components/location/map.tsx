@@ -88,7 +88,7 @@ const Map = (props: Props) => {
 
   const [marker, setMarker] = useState<google.maps.LatLng | null>(null);
 
-  const [modalData, setModalData] = useState<[string, string]>(["", ""]);
+  const [modalData, setModalData] = useState<[string, string, string, string]>(["", "", "", ""]);
 
   const [openModal, setOpenModal] = React.useState(false);
 
@@ -115,35 +115,23 @@ const Map = (props: Props) => {
     };
   }
 
-  // const lookup = new PolygonLookup(location);
-  //console.log(location);
-
   useEffect(() => {
     if (value && value !== null) {
-      console.log(value);
-      // const placeId: string = value.value.place_id || "";
-      // geocodeByPlaceId(placeId)
-      //   .then((results) => console.log(results))
-      //   .catch((error) => console.error(error));
       if (value.label !== "") {
         geocodeByAddress(value.label)
           .then((results) => getLatLng(results[0]))
           .then(({ lat, lng }) => {
-            console.log(lat, lng);
-            console.log("Successfully got latitude and longitude", {
-              lat,
-              lng,
-            });
+            // console.log(lat, lng);
+            // console.log("Successfully got latitude and longitude", {
+            //   lat,
+            //   lng,
+            // });
             setMarker(new google.maps.LatLng({ lat: lat, lng: lng }));
             setCenter({
               lat: lat,
               lng: lng,
             });
             setZoom(15);
-            // const poly = lookup.search(lat, lng);
-            // if(poly){
-            //   console.log(poly); // bar
-            // }
             location.features.map((l, i) => {
               const coordinates = l.geometry.coordinates;
               //console.log(coordinates);
@@ -153,10 +141,10 @@ const Map = (props: Props) => {
                 });
               });
               // console.log(newcoors);
-              console.log(inside([lat, lng], newcoors[0]));
+              // console.log(i, inside([lat, lng], newcoors[0]), l.properties);
               if (inside([lat, lng], newcoors[0])) {
-                console.log(l.properties.StoreName, l.properties.Remark);
-                setModalData([l.properties.StoreName, l.properties.Remark]);
+                // console.log(l.properties.StoreName, l.properties.Remark);
+                setModalData([l.properties.StoreName, l.properties.Remark, l.properties.Grid.toString(), l.properties.Join.toString()]);
                 handleOpenModal();
               } else {
                 //handleCloseModal();
@@ -212,6 +200,18 @@ const Map = (props: Props) => {
             </Grid>
             <Grid item xs={12} sm={8}>
               {modalData[1]}
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              Gird
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              {modalData[2]}
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              Join
+            </Grid>
+            <Grid item xs={12} sm={8}>
+              {modalData[3]}
             </Grid>
           </Grid>
         </div>
