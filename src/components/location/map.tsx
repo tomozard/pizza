@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     paper: {
       position: "absolute",
-      width: 400,
+      width: 280,
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
@@ -189,28 +189,28 @@ const Map = (props: Props) => {
       <Modal open={openModal} onClose={handleCloseModal}>
         <div className={classes.paper} style={modalStyle}>
           <Grid container spacing={3}>
-            <Grid item xs={12} sm={4}>
-              Store Name
+            <Grid item xs={12} sm={5}>
+              Store Name :
             </Grid>
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={7}>
               {modalData[0]}
             </Grid>
-            <Grid item xs={12} sm={4}>
-              Remark
+            <Grid item xs={12} sm={5}>
+              Remark :
             </Grid>
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={7}>
               {modalData[1]}
             </Grid>
-            <Grid item xs={12} sm={4}>
-              Gird
+            <Grid item xs={12} sm={5}>
+              Gird :
             </Grid>
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={7}>
               {modalData[2]}
             </Grid>
-            <Grid item xs={12} sm={4}>
-              Join
+            <Grid item xs={12} sm={5}>
+              Join :
             </Grid>
-            <Grid item xs={12} sm={8}>
+            <Grid item xs={12} sm={7}>
               {modalData[3]}
             </Grid>
           </Grid>

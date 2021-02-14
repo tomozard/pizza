@@ -13,10 +13,10 @@ function App() {
     <Provider store={store}>
       <Container style={{ padding: "12px 24px" }}>
         <Grid container spacing={2}>
-          <Grid item xs={9} style={{ borderRight: "1px dashed #ccc" }}>
+          <Grid item xs={12} sm={8} md={9} style={{ borderRight: "1px dashed #ccc" }}>
             <Product></Product>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item xs={12} sm={4} md={3}>
             <Cart></Cart>
           </Grid>
           <Grid item xs={12}>

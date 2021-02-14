@@ -44,14 +44,14 @@ const List = (props: Props) => {
     <Card className={classes.root}>
       <CardActionArea>
         <Grid container>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={4} md={4}>
             <CardMedia
               className={classes.media}
               image={"https://test.pizzahut1150.com" + product.image_th}
               title={product.imagealt_th}
             />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={8} md={8}>
             <CardContent>
               <Typography component="h3">{product.product_name_th}</Typography>
               <LinesEllipsis
